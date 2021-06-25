@@ -1,0 +1,151 @@
+<div class="main-content-container px-4 pb-4 container-fluid">
+  <div class="page-header py-4 no-gutters row">
+    <div class="text-sm-left text-center text-md-left mb-sm-0 col-12 col-sm-4">
+      <span class="text-uppercase page-subtitle">Dashboard</span>
+      <h3 class="page-title">Dietitian -{{ dietitian?.name | titlecase }}</h3>
+    </div>
+  </div>
+  <div *ngIf="!showPage"><app-loading-spinner></app-loading-spinner></div>
+
+  <div *ngIf="showPage" class="row">
+    <div class="col-lg-4">
+      <div class="card card-small mb-4 pt-3">
+        <div class="card-header border-bottom text-center">
+          <div class="mb-3 mx-auto"></div>
+          <h4 class="mb-0">{{ dietitian?.name | titlecase }}</h4>
+          <span class="text-muted d-block mb-2">{{
+            dietitian?.role | titlecase
+          }}</span>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item p-4">
+            <div class="row">
+              <div class="col">
+                <form [formGroup]="updateProfileForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="feFirstName">Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="feFirstName"
+                        placeholder="First Name"
+                        formControlName="name"
+                        [class.is-invalid]="
+                          updateProfileControls.name.touched &&
+                          updateProfileControls.name.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="feEmailAddress">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="feEmailAddress"
+                        placeholder="Email"
+                        formControlName="email"
+                        [class.is-invalid]="
+                          updateProfileControls.email.touched &&
+                          updateProfileControls.email.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="feEmailAddress">Phone</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Phone"
+                        formControlName="phone"
+                        [class.is-invalid]="
+                          updateProfileControls.phone.touched &&
+                          updateProfileControls.phone.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-accent"
+                    (click)="updateProfile()"
+                    [disabled]="updateProfileControls.phone.errors || updating"
+                  >
+                    Update Profile
+                  </button>
+                </form>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+          <h6 class="m-0">Patients</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item p-3">
+            <div class="row">
+              <div class="col">
+                <table
+                  datatable
+                  class="table"
+                  [dtOptions]="dtOptions"
+                  [dtTrigger]="dtTrigger"
+                >
+                  <thead class="bg-light">
+                    <tr>
+                      <th scope="col" class="border-0">Name</th>
+                      <th scope="col" class="border-0">Email</th>
+                      <th scope="col" class="border-0">Phone</th>
+                      <th scope="col" class="border-0">Subscription Package</th>
+                      <th scope="col" class="border-0">
+                        Subscription Start Date
+                      </th>
+                      <th scope="col" class="border-0">
+                        Subscription End Date
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let patient of patientList">
+                      <td>{{ patient?.name }}</td>
+                      <td>{{ patient?.email }}</td>
+                      <td>{{ patient?.phone }}</td>
+                      <td>{{ patient?.subscriptionPackage }}</td>
+                      <td>
+                        {{
+                          patient?.subscriptionStartDate
+                            ? patient?.subscriptionStartDate
+                            : "&mdash;
+                        "
+                        }}
+                      </td>
+                      <td>
+                        {{
+                          patient?.subscriptionEndDate
+                            ? patient?.subscriptionEndDate
+                            : "&mdash;
+                        "
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

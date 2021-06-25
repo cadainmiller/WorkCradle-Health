@@ -19,6 +19,9 @@ export class DashboardAdminComponent implements OnInit {
 
   logout() {
     localStorage.clear();
+    localStorage.removeItem('Token');
+    localStorage.removeItem('RefreshToken');
+    localStorage.removeItem('User');
     this.router.navigate(['/']);
   }
 }

@@ -4,13 +4,14 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { DashboardAdminComponent } from './dashboard-admin.component';
 import { DietPlanUploadComponent } from './diet-plan-upload/diet-plan-upload.component';
 import { DietitiansCreateComponent } from './dietitians-create/dietitians-create.component';
+import { DietitiansViewComponent } from './dietitians-view/dietitians-view.component';
 import { DietitiansComponent } from './dietitians/dietitians.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { IntakeFormCreateComponent } from './intake-form-create/intake-form-create.component';
 import { MainComponent } from './main/main.component';
 import { PatientCreateComponent } from './patient-create/patient-create.component';
+import { PatientViewComponent } from './patient-view/patient-view.component';
 import { PatientComponent } from './patient/patient.component';
-import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -18,23 +19,31 @@ const routes: Routes = [
     component: DashboardAdminComponent,
     children: [
       { path: '', component: MainComponent },
-      { path: 'dietitians/', component: DietitiansComponent },
+      { path: 'dietitians', component: DietitiansComponent },
       {
-        path: 'dietitians/create/',
+        path: 'dietitians/create',
         component: DietitiansCreateComponent,
       },
-      { path: 'patient/', component: PatientComponent },
       {
-        path: 'patient/create/',
+        path: 'dietitians/view/:id',
+        component: DietitiansViewComponent,
+      },
+      { path: 'patient', component: PatientComponent },
+      {
+        path: 'patient/create',
         component: PatientCreateComponent,
       },
-      { path: 'diet/upload/', component: DietPlanUploadComponent },
-      { path: 'appointment/', component: AppointmentsComponent },
       {
-        path: 'intakeform/create/',
+        path: 'patient/view/:id',
+        component: PatientViewComponent,
+      },
+      { path: 'diet/upload', component: DietPlanUploadComponent },
+      { path: 'appointment', component: AppointmentsComponent },
+      {
+        path: 'intakeform/create',
         component: IntakeFormCreateComponent,
       },
-      { path: 'document/', component: DocumentsComponent },
+      { path: 'document', component: DocumentsComponent },
     ],
   },
 ];

@@ -11,6 +11,7 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
 import { LoginRegisterModule } from './login-register/login-register.module';
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [

@@ -12,6 +12,12 @@ import { IntakeFormCreateComponent } from './intake-form-create/intake-form-crea
 import { DocumentsComponent } from './documents/documents.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { MainComponent } from './main/main.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
+import { DataTablesModule } from 'angular-datatables';
+import { PatientViewComponent } from './patient-view/patient-view.component';
+
+import { DietitiansViewComponent } from './dietitians-view/dietitians-view.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +31,17 @@ import { MainComponent } from './main/main.component';
     IntakeFormCreateComponent,
     DocumentsComponent,
     MainComponent,
+    PatientViewComponent,
+
+    DietitiansViewComponent,
   ],
-  imports: [CommonModule, DashboardAdminRoutingModule],
+  imports: [
+    CommonModule,
+    DashboardAdminRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SharedModule,
+    DataTablesModule,
+  ],
 })
 export class DashboardAdminModule {}

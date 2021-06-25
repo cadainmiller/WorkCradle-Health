@@ -1,1 +1,94 @@
-<p>dietitians-create works!</p>
+<div class="main-content-container px-4 pb-4 container-fluid">
+  <div class="page-header py-4 no-gutters row">
+    <div class="text-sm-left text-center text-md-left mb-sm-0 col-12 col-sm-4">
+      <span class="text-uppercase page-subtitle">Dashboard</span>
+      <h3 class="page-title">Create Dietician</h3>
+    </div>
+  </div>
+
+  <div class="main-content main-content-container px-0 container-fluid">
+    <div
+      class="
+        d-flex
+        flex-column
+        align-items-center
+        py-5
+        px-2
+        m-0
+        w-100
+        container-fluid
+      "
+    >
+      <div class="card card-small mb-4" style="width: 100%; max-width: 500px">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item px-3">
+            <form id="dietician_Login" class="">
+              <div class="form-group">
+                <label for="name">Name</label
+                ><input
+                  required=""
+                  id="name"
+                  name="name"
+                  placeholder="Name"
+                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="emailAdress" style="font-size: 1rem">Email</label
+                ><input
+                  required=""
+                  id="emailAddress"
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
+                  class="form-custom form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label
+                ><input
+                  required=""
+                  id="phone"
+                  name="phone"
+                  placeholder="Phone"
+                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label
+                ><input
+                  required=""
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
+                  class="form-control"
+                />
+                <p
+                  style="width: 100%; margin-top: 0.25rem; font-size: 80%"
+                  class="mb-0"
+                >
+                  Minimum of 8 characters. Must contain a letter and a number.
+                </p>
+              </div>
+              <div class="p-0 col">
+                <button
+                  type="submit"
+                  style="font-size: 1rem"
+                  form="dietician_Login"
+                  class="w-100 bg-custom btn-custom btn btn-primary"
+                >
+                  Create Dietician
+                </button>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

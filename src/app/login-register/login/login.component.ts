@@ -9,7 +9,23 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+    const user = localStorage.getItem('User');
+    if (user) {
+      const newUser = JSON.parse(user);
+      if (newUser.role === 'admin') {
+        this.router.navigate([`/admin`]);
+      } else if (newUser.role === 'dietitian') {
+        this.router.navigate(['/dietitian']);
+      } else if (newUser.role === 'patient') {
+        this.router.navigate(['/patient']);
+      } else {
+        this.router.navigate(['/']);
+      }
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
 
   user: any;
 

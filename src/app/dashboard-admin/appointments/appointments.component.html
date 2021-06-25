@@ -1,1 +1,322 @@
-<p>appointments works!</p>
+<div class="main-content-container px-4 pb-4 container-fluid">
+  <div class="page-header py-4 no-gutters row">
+    <div class="text-sm-left text-center text-md-left mb-sm-0 col-12 col-sm-4">
+      <span class="text-uppercase page-subtitle">Dashboard</span>
+      <h3 class="page-title">Appointments</h3>
+    </div>
+  </div>
+  <div *ngIf="!showPage"><app-loading-spinner></app-loading-spinner></div>
+  <div *ngIf="showPage">
+    <div
+      class="alert alert-success alert-dismissible fade show mx-2"
+      role="alert"
+      *ngIf="appointmentCreated"
+    >
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+      <i class="fa fa-check mx-2"></i>
+      {{ message }}
+    </div>
+    <div
+      style="
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      "
+      class="m-0 row"
+    ></div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card card-small card-post mb-4">
+          <div class="card-body">
+            <div
+              type="button"
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+              class="
+                btn-custom
+                bg-custom
+                m-3
+                btn
+                card
+                d-flex
+                justify-content-center
+                align-items-center
+                btn btn-outline-primary
+              "
+              style="
+                text-align: center;
+                font-weight: 500;
+                font-size: 1.2rem;
+                height: 140px;
+                border: 1px solid rgb(82, 181, 233);
+                box-shadow: none;
+              "
+            >
+              <span style="font-size: 2.5rem">+</span> Create Appointment
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="modal fade"
+          id="exampleModalCenter"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content p-0">
+              <div class="card">
+                <div class="card-header border-bottom">
+                  <h6 class="m-0">Create Appointment</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item px-3">
+                    <form [formGroup]="crateAppointmentForm">
+                      <strong class="text-muted d-block mb-2">Patient</strong>
+                      <div class="input-group mb-3">
+                        <select
+                          class="form-control"
+                          id="exampleFormControlSelect1"
+                          formControlName="createdFor"
+                        >
+                          <option
+                            *ngFor="let patient of patientList"
+                            [value]="patient?.id"
+                          >
+                            {{ patient?.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <strong class="text-muted d-block mb-2">Dietitian</strong>
+                      <div class="input-group mb-3">
+                        <select
+                          class="form-control"
+                          id="exampleFormControlSelect1"
+                          formControlName="createdBy"
+                        >
+                          <option
+                            *ngFor="let dietitian of dietitianList"
+                            [value]="dietitian?.id"
+                          >
+                            {{ dietitian?.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col md-6 col sm-12">
+                          <strong class="text-muted d-block mb-2">Date</strong>
+                          <div class="input-group mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="MM/DD/YYYY"
+                              formControlName="appointmentDate"
+                              aria-describedby="basic-addon1"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col md-6 col sm-12">
+                          <strong class="text-muted d-block mb-2"
+                            >Duration</strong
+                          >
+                          <div class="input-group mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="1 Hour"
+                              formControlName="appointmentDuration"
+                              aria-describedby="basic-addon1"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6 col md-6 col sm-12">
+                          <strong class="text-muted d-block mb-2"
+                            >Platform</strong
+                          >
+                          <div class="input-group mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Zoom"
+                              formControlName="appointmentPlatform"
+                              aria-describedby="basic-addon1"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col md-6 col sm-12">
+                          <strong class="text-muted d-block mb-2">Link</strong>
+                          <div class="input-group mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="https://zoom.us/"
+                              formControlName="appointmentPlatformLink"
+                              aria-describedby="basic-addon1"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <strong class="text-muted d-block mb-2">Notes</strong>
+                      <div class="input-group mb-3">
+                        <textarea
+                          type="text"
+                          class="form-control"
+                          placeholder="Any other information"
+                          formControlName="appointmentNotes"
+                          aria-describedby="basic-addon1"
+                        ></textarea>
+                      </div>
+                    </form>
+                    <button
+                      type="button"
+                      class="mb-2 btn btn-outline-success mr-2"
+                      (click)="createAppointment()"
+                      data-dismiss="modal"
+                    >
+                      Create Appointment
+                    </button>
+                    <button
+                      type="button"
+                      class="mb-2 btn btn-outline-danger mr-2"
+                      data-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4" *ngIf="appointmentList.length === 0">
+        <div class="card card-small card-post mb-4">
+          <div class="card-body">
+            <div
+              class="
+                m-3
+                btn
+                card
+                d-flex
+                justify-content-center
+                align-items-center
+              "
+              style="
+                text-align: center;
+                font-weight: 500;
+                font-size: 1.2rem;
+                height: 140px;
+                box-shadow: none;
+              "
+            >
+              <div class="text-primary" role="alert">No Appointment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4" *ngFor="let appointment of appointmentList">
+        <div class="card card-small card-post mb-4">
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ appointment?.Patient?.name }}
+              <a
+                href="#"
+                class="card-post__category badge badge-pill badge-secondary"
+                [class.badge-success]="appointment?.Appointment?.isAccepted"
+                style="margin-left: 23vh"
+                >{{
+                  appointment?.Appointment?.isAccepted
+                    ? "Accepted"
+                    : "Under Review"
+                }}</a
+              >
+            </h5>
+            <div
+              class="row overflow-auto position-relative"
+              style="height: 9vh"
+            >
+              <div
+                class="col-12 text-muted"
+                *ngIf="appointment.Appointment.appointmentPlatform"
+              >
+                <span>Platform: </span>
+                {{ appointment?.Appointment?.appointmentPlatform }}
+              </div>
+
+              <div
+                class="col-12 text-muted"
+                *ngIf="appointment.Appointment.appointmentPlatformLink"
+              >
+                <span>Platform Link: </span>
+                <span
+                  ><a
+                    [href]="appointment?.Appointment?.appointmentPlatformLink"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ appointment?.Appointment?.appointmentPlatformLink }}</a
+                  ></span
+                >
+              </div>
+              <br />
+              <div
+                class="col-12 text-muted"
+                *ngIf="appointment.Appointment.appointmentNotes"
+              >
+                <span>Notes: </span>
+                {{ appointment?.Appointment?.appointmentNotes }}
+              </div>
+            </div>
+          </div>
+          <div class="card-footer border-top d-flex">
+            <div class="card-post__author d-flex">
+              <div class="d-flex flex-column justify-content-center ml-3">
+                <span class="card-post__author-name">{{
+                  appointment?.Dietitian?.name
+                }}</span>
+                <small class="text-muted">{{
+                  appointment?.Appointment?.appointmentDate | date: "mediumDate"
+                }}</small>
+              </div>
+            </div>
+            <div class="my-auto ml-auto">
+              <div class="btn-group btn-group-sm">
+                <button
+                  type="button"
+                  class="btn btn-white"
+                  (click)="acceptAppointment(appointment?.Appointment?.id)"
+                  [disabled]="appointment?.Appointment?.isAccepted"
+                >
+                  <span class="text-success">
+                    <i class="material-icons">check</i>
+                  </span>
+                  Accept
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-white"
+                  (click)="rejectAppointment(appointment?.Appointment?.id)"
+                >
+                  <span class="text-danger">
+                    <i class="material-icons">clear</i>
+                  </span>
+                  Reject
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
