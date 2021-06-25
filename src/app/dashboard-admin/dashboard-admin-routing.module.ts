@@ -17,24 +17,24 @@ const routes: Routes = [
     path: '',
     component: DashboardAdminComponent,
     children: [
-      { path: ':id', component: MainComponent },
-      { path: 'dietitians/:companyCode', component: DietitiansComponent },
+      { path: '', component: MainComponent },
+      { path: 'dietitians/', component: DietitiansComponent },
       {
-        path: 'dietitians/create/:companyCode',
+        path: 'dietitians/create/',
         component: DietitiansCreateComponent,
       },
-      { path: 'patient/:companyCode', component: PatientComponent },
+      { path: 'patient/', component: PatientComponent },
       {
-        path: 'patient/create/:companyCode',
+        path: 'patient/create/',
         component: PatientCreateComponent,
       },
-      { path: 'diet/upload/:companyCode', component: DietPlanUploadComponent },
-      { path: 'appointment/:companyCode', component: AppointmentsComponent },
+      { path: 'diet/upload/', component: DietPlanUploadComponent },
+      { path: 'appointment/', component: AppointmentsComponent },
       {
-        path: 'intakeform/create/:companyCode',
+        path: 'intakeform/create/',
         component: IntakeFormCreateComponent,
       },
-      { path: 'document/:companyCode', component: DocumentsComponent },
+      { path: 'document/', component: DocumentsComponent },
     ],
   },
 ];

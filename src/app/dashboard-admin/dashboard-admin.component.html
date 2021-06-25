@@ -56,7 +56,11 @@
       <div class="nav-wrapper">
         <ul class="nav--no-borders flex-column nav">
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/profile"
+            <a
+              class="nav-link"
+              [routerLink]="['/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">dashboard</i>
               </div>
@@ -64,7 +68,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/dietitians"
+            <a
+              class="nav-link"
+              [routerLink]="['/dietitians']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">person</i>
               </div>
@@ -72,7 +80,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/create_dietitian"
+            <a
+              class="nav-link"
+              [routerLink]="['/dietitians/create/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">person_add_alt</i>
               </div>
@@ -80,7 +92,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/create_patient"
+            <a
+              class="nav-link"
+              [routerLink]="['/patient/create/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">person_add_alt</i>
               </div>
@@ -88,7 +104,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/patients"
+            <a
+              class="nav-link"
+              [routerLink]="['/patient/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">groups</i>
               </div>
@@ -96,7 +116,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/upload_diet_plan"
+            <a
+              class="nav-link"
+              [routerLink]="['/diet/upload/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">post_add</i>
               </div>
@@ -104,7 +128,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/progress_flow_intake_form"
+            <a
+              class="nav-link"
+              [routerLink]="['/intakeform/create/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">assignment</i>
               </div>
@@ -112,7 +140,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/appointments"
+            <a
+              class="nav-link"
+              [routerLink]="['/appointment/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">schedule</i>
               </div>
@@ -120,7 +152,11 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/superadmin/documents"
+            <a
+              class="nav-link"
+              [routerLink]="['/document/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
               ><div class="d-inline-block item-icon-wrapper">
                 <i class="material-icons">folder</i>
               </div>
@@ -175,7 +211,7 @@
                   src="assets/images/avatars/0.jpg"
                   alt="User Avatar"
                 />
-                <span class="d-none d-md-inline-block">Sierra Brooks</span>
+                <span class="d-none d-md-inline-block">{{ user.name }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-small">
                 <a class="dropdown-item" href="user-profile-lite.html">

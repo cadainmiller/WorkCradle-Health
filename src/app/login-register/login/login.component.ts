@@ -28,11 +28,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
   loginUser() {
-    console.log(this.LoginForm.value);
-
     this.authService.login(this.LoginForm.value).subscribe(
       (data) => {
-        console.log(data);
         this.user = data.user;
         localStorage.setItem('Token', JSON.stringify(data.tokens.access));
         localStorage.setItem(
@@ -46,7 +43,7 @@ export class LoginComponent implements OnInit {
       },
       () => {
         if (this.user.role === 'admin') {
-          this.router.navigate([`/admin/${this.user.companyCode}`]);
+          this.router.navigate([`/admin`]);
         } else if (this.user.role === 'dietitian') {
           this.router.navigate(['/dietitian']);
         } else if (this.user.role === 'patient') {

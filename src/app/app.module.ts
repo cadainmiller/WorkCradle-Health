@@ -10,6 +10,7 @@ import { DashboardPatientComponent } from './dashboard-patient/dashboard-patient
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { LoginRegisterModule } from './login-register/login-register.module';
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
     DashboardAdminModule,
   ],
   providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpConfigInterceptor,
