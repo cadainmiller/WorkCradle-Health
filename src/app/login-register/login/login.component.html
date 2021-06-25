@@ -1,0 +1,78 @@
+<div>
+  <div class="main-content main-content-container px-0 container-fluid">
+    <div
+      class="
+        d-flex
+        justify-content-center
+        bg-white
+        py-3
+        header-navbar
+        sticky-top
+      "
+    >
+      <a href="/"
+        ><img
+          id="main-logo"
+          class="d-inline-block align-middle mx-auto"
+          style="max-width: 200px"
+          src="assets/images/logo.png"
+          alt="workcradle"
+      /></a>
+    </div>
+    <div
+      class="
+        d-flex
+        flex-column
+        align-items-center
+        py-5
+        px-2
+        m-0
+        w-100
+        container-fluid
+      "
+    >
+      <div class="card card-small mb-4" style="width: 100%; max-width: 500px">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item px-3">
+            <form id="superAdmin_login" [formGroup]="LoginForm" class="">
+              <h4 class="mb-4 text-center">Login</h4>
+              <div class="form-group">
+                <label for="emailAdress" style="font-size: 1rem">Email</label
+                ><input
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
+                  class="form-custom form-control"
+                  formControlName="email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label
+                ><input
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
+                  class="form-control"
+                  formControlName="password"
+                />
+              </div>
+              <div class="p-0 col">
+                <button
+                  type="submit"
+                  style="font-size: 1rem"
+                  form="superAdmin_login"
+                  class="w-100 bg-custom btn-custom btn btn-primary"
+                  (click)="loginUser()"
+                >
+                  Log In
+                </button>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
