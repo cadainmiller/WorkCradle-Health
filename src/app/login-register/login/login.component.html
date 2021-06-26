@@ -36,7 +36,22 @@
           <li class="list-group-item px-3">
             <form id="superAdmin_login" [formGroup]="LoginForm" class="">
               <h4 class="mb-4 text-center">Login</h4>
-
+              <div
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+                *ngIf="hasError"
+              >
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+                <i class="fa fa-times mx-2"></i>
+                {{ hasErrorMessage }}
+              </div>
               <div class="input-group mb-3">
                 <label for="emailAdress" style="font-size: 1rem">Email</label>
                 <div class="input-group input-group-seamless">

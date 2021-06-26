@@ -9,6 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  hasError = false;
+  hasErrorMessage = '';
+
   constructor(private router: Router, private authService: AuthService) {
     const user = localStorage.getItem('User');
     if (user) {
@@ -56,6 +59,10 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        if (error.error.code === 401) {
+          this.hasError = true;
+          this.hasErrorMessage = error.error.message;
+        }
       },
       () => {
         if (this.user.role === 'admin') {
