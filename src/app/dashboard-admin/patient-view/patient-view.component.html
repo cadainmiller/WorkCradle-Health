@@ -104,31 +104,51 @@
                           <div class="d-block">
                             <input
                               type="radio"
+                              class="m-2"
                               name="subscription"
                               value="Trial Package"
-                              class="m-2"
+                              (click)="togglePackage('Trial Package')"
+                              [checked]="
+                                updateProfileControls.subscriptionPackage
+                                  .value === 'Trial Package'
+                              "
                             />Try Out Package
                           </div>
                           <div class="d-block">
                             <input
                               type="radio"
+                              class="m-2"
                               name="subscription"
                               value="Basic Package"
-                              class="m-2"
+                              (click)="togglePackage('Basic Package')"
+                              [checked]="
+                                updateProfileControls.subscriptionPackage
+                                  .value === 'Basic Package'
+                              "
                             />Basic Package
                           </div>
                           <div class="d-block">
                             <input
                               type="radio"
-                              name="subscription"
                               class="m-2"
+                              name="subscription"
+                              (click)="togglePackage('Platinum Package')"
+                              [checked]="
+                                updateProfileControls.subscriptionPackage
+                                  .value === 'Platinum Package'
+                              "
                             />Platinum Package
                           </div>
                           <div class="d-block">
                             <input
                               type="radio"
-                              name="subscription"
                               class="m-2"
+                              name="subscription"
+                              (click)="togglePackage('Premium Package')"
+                              [checked]="
+                                updateProfileControls.subscriptionPackage
+                                  .value === 'Premium Package'
+                              "
                             />Premium Package
                           </div>
                         </fieldset>
@@ -138,33 +158,19 @@
                       <div class="form-group">
                         <label>Health Condition</label>
                         <fieldset style="font-size: 0.85rem">
-                          <div class="d-block">
+                          <div
+                            class="d-block"
+                            *ngFor="
+                              let item of updateProfileControls.healthCondition
+                                .value
+                            "
+                          >
                             <input
                               type="checkbox"
                               value="Obese"
                               class="m-2"
-                            />Obese
-                          </div>
-                          <div class="d-block">
-                            <input
-                              type="checkbox"
-                              value="Diabetic"
-                              class="m-2"
-                            />Diabetic
-                          </div>
-                          <div class="d-block">
-                            <input
-                              type="checkbox"
-                              value="Hypertensive"
-                              class="m-2"
-                            />Hypertensive
-                          </div>
-                          <div class="d-block">
-                            <input
-                              type="checkbox"
-                              value="Heart Disease"
-                              class="m-2"
-                            />Heart Disease
+                              checked
+                            />{{ item }}
                           </div>
                         </fieldset>
 
@@ -172,12 +178,15 @@
                           <input
                             type="text"
                             class="form-control"
-                            placeholder="Recipient's username"
-                            aria-label="Recipient's username"
-                            aria-describedby="basic-addon2"
+                            placeholder="Other"
+                            formControlName="singleHealthCondition"
                           />
                           <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
+                            <button
+                              class="btn btn-primary"
+                              type="button"
+                              (click)="addHealthCondition()"
+                            >
                               +
                             </button>
                           </div>
@@ -195,31 +204,54 @@
                           formControlName="healthGoal"
                           class="form-control ng-untouched ng-pristine ng-valid"
                           ng-reflect-name="healthGoal"
+                          foodPreference
                         />
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-12">
-                      <div class="input-group mb-3">
+                      <div class="input-group mb-1">
                         <input
                           type="text"
                           class="form-control"
-                          placeholder="Recipient's username"
-                          aria-label="Recipient's username"
-                          aria-describedby="basic-addon2"
+                          placeholder="Food Preference"
+                          formControlName="singleFoodPreference"
                         />
                         <div class="input-group-append">
-                          <button class="btn btn-primary" type="button">
+                          <button
+                            class="btn btn-primary"
+                            type="button"
+                            (click)="addFoodPreference()"
+                          >
                             +
                           </button>
                         </div>
+                      </div>
+                      <div
+                        class="p-1"
+                        *ngIf="
+                          updateProfileControls.foodPreference.value.length > 0
+                        "
+                      >
+                        <span
+                          *ngFor="
+                            let item of updateProfileControls.foodPreference
+                              .value
+                          "
+                          class="
+                            m-1
+                            card-post__category
+                            badge badge-pill badge-info
+                          "
+                          >{{ item }}</span
+                        >
                       </div>
                     </div>
                   </div>
                   <button
                     type="submit"
-                    class="btn btn-accent"
+                    class="btn btn-accent mt-2"
                     (click)="updateProfile()"
-                    [disabled]="updateProfileControls.phone.errors || updating"
+                    [disabled]="updateProfileForm.invalid"
                   >
                     Update Profile
                   </button>

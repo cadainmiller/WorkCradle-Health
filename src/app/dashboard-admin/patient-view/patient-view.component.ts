@@ -58,6 +58,64 @@ export class PatientViewComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  togglePackage(subPackage: string) {
+    this.updateProfileForm.patchValue({
+      subscriptionPackage: subPackage,
+    });
+  }
+
+  toggleHealthCondition(condition: string) {
+    let healthArray = this.updateProfileControls.healthCondition.value;
+    const index = healthArray.findIndex((h) => h === condition);
+    if (index > -1) {
+      healthArray = healthArray.slice(index);
+    } else {
+      healthArray.push(condition);
+    }
+    this.updateProfileForm.patchValue({
+      healthCondition: healthArray,
+    });
+  }
+
+  addHealthCondition() {
+    const healthArray = this.updateProfileControls.healthCondition.value;
+    const healthCondition =
+      this.updateProfileControls.singleHealthCondition.value;
+    healthArray.push(healthCondition);
+    this.updateProfileForm.patchValue({
+      healthCondition: healthArray,
+    });
+    this.updateProfileControls.singleHealthCondition.reset();
+  }
+
+  addFoodPreference() {
+    const foodPreferenceArray = this.updateProfileControls.foodPreference.value;
+    const foodPreference =
+      this.updateProfileControls.singleFoodPreference.value;
+    foodPreferenceArray.push(foodPreference);
+
+    this.updateProfileForm.patchValue({
+      foodPreference: foodPreferenceArray,
+    });
+    this.updateProfileControls.singleFoodPreference.reset();
+  }
+
+  updateProfile() {
+    if (this.updateProfileForm.valid) {
+      const patient = this.updateProfileForm.value;
+      this.patientService
+        .updatePatient(this.patient.patient.id, patient)
+        .subscribe((data) => {
+          console.log('Update Patient', data);
+          this.patient.patient = data;
+          // this.patientCreated = true;
+          // setTimeout(() => {
+          //   this.patientCreated = false;
+          // }, 3000);
+        });
+    }
+  }
+
   private buildForm(): void {
     this.updateProfileForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -74,16 +132,24 @@ export class PatientViewComponent implements OnInit {
       subscriptionStartDate: [''],
       subscriptionEndDate: [''],
       assignedDietitian: [''],
-      isEmailVerified: [true],
     });
   }
 
-  private setFormValues(dietitian) {
-    if (dietitian) {
+  private setFormValues(patient) {
+    if (patient) {
       this.updateProfileForm.patchValue({
-        name: dietitian.name,
-        email: dietitian.email,
-        phone: dietitian.phone,
+        name: patient.name || '',
+        email: patient.email || '',
+        phone: patient.phone || '',
+        age: patient.age || '',
+        weight: patient.weight || '',
+        healthGoal: patient.healthGoal || '',
+        healthCondition: patient.healthCondition || '',
+        foodPreference: patient.foodPreference || '',
+        subscriptionPackage: patient.subscriptionPackage || '',
+        subscriptionStartDate: patient.subscriptionStartDate || '',
+        subscriptionEndDate: patient.subscriptionEndDate || '',
+        assignedDietitian: patient.assignedDietitian || '',
       });
     }
   }
