@@ -27,12 +27,7 @@
               <h6 class="m-0">Company Documents</h6>
             </div>
             <div class="card-body">
-              <table
-                datatable
-                class="table"
-                [dtOptions]="dtOptions"
-                [dtTrigger]="dtTrigger"
-              >
+              <table datatable class="table" [dtOptions]="dtOptions">
                 <thead class="bg-light">
                   <tr>
                     <th scope="col" class="border-0">Dietitian</th>
@@ -54,7 +49,16 @@
                         >{{ document?.Dietitian?.name }}</a
                       >
                     </td>
-                    <td>{{ document?.Patient?.name }}</td>
+                    <td>
+                      <a
+                        [routerLink]="[
+                          '/patient/view/' + document?.Patient?.id
+                        ]"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        routerLinkActive="active"
+                        >{{ document?.Patient?.name }}</a
+                      >
+                    </td>
                     <td>
                       {{ document?.Document?.docName }}
                     </td>

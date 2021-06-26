@@ -40,9 +40,9 @@ export class DietitiansViewComponent implements OnInit {
           .getPatientByDietitianId(this.dietitian.id)
           .subscribe((data) => {
             console.log('Patients', data);
-            this.dtTrigger.next();
             this.patientList = data;
             this.showPage = true;
+            this.dtTrigger.next();
           });
       });
     });

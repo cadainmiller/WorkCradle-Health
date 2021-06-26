@@ -95,7 +95,9 @@
             type="button"
             style="font-size: 0.85rem"
             class="mb-2 btn btn-outline-primary btn-sm btn-pill"
-            (click)="viewPatient(patient)"
+            [routerLink]="['/patient/view/' + patient?.Patient?.id]"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active"
           >
             View
           </button>
