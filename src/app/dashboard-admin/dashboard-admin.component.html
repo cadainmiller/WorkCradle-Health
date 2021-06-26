@@ -169,6 +169,18 @@
               <span>Documents</span></a
             >
           </li>
+          <li class="nav-item" *ngIf="user.isSuperAdmin">
+            <a
+              class="nav-link"
+              [routerLink]="['/company/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons"> business </i>
+              </div>
+              <span>Company</span></a
+            >
+          </li>
         </ul>
       </div>
     </aside>

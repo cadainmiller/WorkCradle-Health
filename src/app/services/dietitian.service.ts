@@ -9,6 +9,17 @@ import { environment } from 'src/environments/environment';
 export class DietitianService {
   constructor(private httpClient: HttpClient) {}
 
+  createDietitian(body): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.httpClient.post(
+      `${environment.apiUrl}Users/CreateUser/`,
+      body,
+      {
+        headers: headers,
+      }
+    );
+  }
+
   getDietitianByCompanyCode(companyCode): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     return this.httpClient.get(
@@ -31,6 +42,21 @@ export class DietitianService {
     const headers = { 'content-type': 'application/json' };
     return this.httpClient.get(
       `${environment.apiUrl}Users/GetPatientByDietitianId/${id}`,
+      {
+        headers: headers,
+      }
+    );
+  }
+  getAdminAllOnly(): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.httpClient.get(`${environment.apiUrl}Users/GetAdminAllOnly/`, {
+      headers: headers,
+    });
+  }
+  getDietitianAllOnly(): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.httpClient.get(
+      `${environment.apiUrl}Users/GetDietitianAllOnly/`,
       {
         headers: headers,
       }

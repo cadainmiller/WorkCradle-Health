@@ -81,13 +81,18 @@
                 "
                 class="mb-2"
               >
-                <span
+                <button
                   *ngFor="
                     let item of patient.Patient.healthCondition;
                     let i = index
                   "
-                  >{{ item }}
-                </span>
+                  class="m-1 badge badge-pill badge-outline-primary"
+                >
+                  {{ item }}
+                  <span class="text-danger">
+                    <i class="material-icons">clear</i>
+                  </span>
+                </button>
               </p>
             </div>
           </div>

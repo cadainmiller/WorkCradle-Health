@@ -18,6 +18,8 @@ import { DataTablesModule } from 'angular-datatables';
 import { PatientViewComponent } from './patient-view/patient-view.component';
 
 import { DietitiansViewComponent } from './dietitians-view/dietitians-view.component';
+import { CompanyComponent } from './company/company.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { DietitiansViewComponent } from './dietitians-view/dietitians-view.compo
     PatientViewComponent,
 
     DietitiansViewComponent,
+     CompanyComponent,
+     NotFoundComponent,
   ],
   imports: [
     CommonModule,

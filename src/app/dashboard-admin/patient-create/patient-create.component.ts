@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DietitianService } from 'src/app/services/dietitian.service';
 import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
@@ -11,11 +12,23 @@ export class PatientCreateComponent implements OnInit {
   patientForm: FormGroup;
   user: any;
 
+  dietitianList = [];
+
   patientCreated: boolean;
-  constructor(private fb: FormBuilder, private patientService: PatientService) {
+  constructor(
+    private fb: FormBuilder,
+    private patientService: PatientService,
+    private dietitianService: DietitianService
+  ) {
     this.patientCreated = false;
     const userString = localStorage.getItem('User');
     this.user = JSON.parse(userString);
+    dietitianService
+      .getDietitianByCompanyCodeOnly(this.user.companyCode)
+      .subscribe((data) => {
+        console.log('Dietitians', data);
+        this.dietitianList = data;
+      });
     this.buildForm(this.user);
   }
 
@@ -74,6 +87,7 @@ export class PatientCreateComponent implements OnInit {
     healthArray.push(healthCondition);
     this.patientForm.patchValue({
       healthCondition: healthArray,
+      role: 'patient',
     });
     this.patientControls.singleHealthCondition.reset();
   }
@@ -94,7 +108,7 @@ export class PatientCreateComponent implements OnInit {
       const patient = this.patientForm.value;
       this.patientService.createPatient(patient).subscribe((data) => {
         console.log('Created Patient', data);
-
+        this.patientForm.reset();
         this.patientCreated = true;
         setTimeout(() => {
           this.patientCreated = false;

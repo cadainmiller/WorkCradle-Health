@@ -6,6 +6,30 @@
     </div>
   </div>
 
+  <div
+    class="alert alert-success alert-dismissible fade show mx-2"
+    role="alert"
+    *ngIf="dietitianCreated"
+  >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <i class="fa fa-check mx-2"></i>
+    Dietitian Was Created Successfully
+  </div>
+
+  <div
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+    *ngIf="hasError"
+  >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <i class="fa fa-times mx-2"></i>
+    {{ hasErrorMessage }}
+  </div>
+
   <div class="main-content main-content-container px-0 container-fluid">
     <div
       class="
@@ -20,74 +44,158 @@
       "
     >
       <div class="card card-small mb-4" style="width: 100%; max-width: 500px">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item px-3">
-            <form id="dietician_Login" class="">
-              <div class="form-group">
-                <label for="name">Name</label
-                ><input
-                  required=""
-                  id="name"
-                  name="name"
-                  placeholder="Name"
-                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
-                  class="form-control"
-                />
+        <h4 class="mb-2 mt-4 text-center">Create Dietitian</h4>
+        <form [formGroup]="dietitianForm">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item p-3">
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div class="form-group" *ngIf="superAdminAccess">
+                    <label for="name" style="font-size: 1rem">Company</label>
+
+                    <div class="input-group mb-3">
+                      <select
+                        class="form-control"
+                        id="exampleFormControlSelect1"
+                      >
+                        <option selected value="" disabled>
+                          Select Company
+                        </option>
+                        <option
+                          *ngFor="let dietitian of companiesList"
+                          [value]="dietitian?.id"
+                          (click)="addCompanyCode(dietitian?.companyCode)"
+                        >
+                          {{ dietitian?.name }}
+                        </option>
+                      </select>
+                      <p
+                        style="width: 100%; margin-top: 0.25rem"
+                        class="mb-0"
+                        *ngIf="companyNotSelected"
+                      >
+                        If not selected dietician will Be created your company
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="name" style="font-size: 1rem">Name</label>
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Patient Name"
+                        formControlName="name"
+                        [class.is-invalid]="
+                          dietitianControls.name.touched &&
+                          dietitianControls.name.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div>
+                  </div>
+                  <label for="name" style="font-size: 1rem">Email</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Email"
+                      formControlName="email"
+                      [class.is-invalid]="
+                        dietitianControls.email.touched &&
+                        dietitianControls.email.errors?.required
+                      "
+                    />
+                    <div class="invalid-feedback">This Felid Is Required</div>
+                  </div>
+                  <label for="name" style="font-size: 1rem">Phone</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="string"
+                      class="form-control"
+                      placeholder="Phone"
+                      formControlName="phone"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="name" style="font-size: 1rem">Password</label>
+                    <div class="input-group mb-3">
+                      <input
+                        type="password"
+                        class="form-control"
+                        placeholder="*********"
+                        formControlName="password"
+                        [class.is-invalid]="
+                          dietitianControls.password.touched &&
+                          dietitianControls.password.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                      <div
+                        *ngIf="dietitianControls.password.errors?.required"
+                        class="invalid-feedback"
+                      >
+                        This Felid Is Required
+                      </div>
+                    </div>
+                  </div>
+
+                  <label for="name" style="font-size: 1rem"
+                    >Confirm Password</label
+                  >
+
+                  <div class="input-group mb-3">
+                    <input
+                      type="password"
+                      class="form-control"
+                      placeholder="*********"
+                      formControlName="confirmPassword"
+                      [class.is-invalid]="
+                        dietitianControls.confirmPassword.touched &&
+                        dietitianControls.password.value !=
+                          dietitianControls.confirmPassword.value
+                      "
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn"
+                        type="button"
+                        [class.btn-danger]="
+                          dietitianControls.confirmPassword.touched &&
+                          dietitianControls.password.value !=
+                            dietitianControls.confirmPassword.value
+                        "
+                        (click)="copyPassword()"
+                      >
+                        COPY
+                      </button>
+                    </div>
+                    <div class="invalid-feedback">This Felid Is Required</div>
+                    <div
+                      *ngIf="
+                        dietitianControls.confirmPassword.errors?.minlength
+                      "
+                      class="invalid-feedback"
+                    >
+                      Minimum of 8 characters. Must contain a letter and a
+                      number.
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="emailAdress" style="font-size: 1rem">Email</label
-                ><input
-                  required=""
-                  id="emailAddress"
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
-                  class="form-custom form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="phone">Phone</label
-                ><input
-                  required=""
-                  id="phone"
-                  name="phone"
-                  placeholder="Phone"
-                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label
-                ><input
-                  required=""
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  style="padding: 0.5rem 0.75rem; font-size: 0.9rem"
-                  class="form-control"
-                />
-                <p
-                  style="width: 100%; margin-top: 0.25rem; font-size: 80%"
-                  class="mb-0"
-                >
-                  Minimum of 8 characters. Must contain a letter and a number.
-                </p>
-              </div>
-              <div class="p-0 col">
-                <button
-                  type="submit"
-                  style="font-size: 1rem"
-                  form="dietician_Login"
-                  class="w-100 bg-custom btn-custom btn btn-primary"
-                >
-                  Create Dietician
-                </button>
-              </div>
-            </form>
-          </li>
-        </ul>
+              <button
+                type="submit"
+                style="font-size: 1rem"
+                form="dietician_Login"
+                class="w-100 bg-custom btn-custom btn btn-primary"
+                (click)="createDietitian()"
+              >
+                Create Dietician
+              </button>
+            </li>
+          </ul>
+        </form>
       </div>
     </div>
   </div>

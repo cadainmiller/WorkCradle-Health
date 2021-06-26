@@ -16,6 +16,7 @@
     <i class="fa fa-check mx-2"></i>
     Patient Was Created Successfully
   </div>
+
   <div class="row">
     <div class="col-lg-12 mb-12">
       <form [formGroup]="patientForm">
@@ -24,6 +25,42 @@
             <li class="list-group-item p-3">
               <div class="row">
                 <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="name" style="font-size: 1rem"
+                      >Assigned Dietitian</label
+                    >
+
+                    <div class="input-group mb-3">
+                      <select
+                        class="form-control"
+                        id="exampleFormControlSelect1"
+                        formControlName="assignedDietitian"
+                      >
+                        <option selected value="" disabled>
+                          Select Dietitian
+                        </option>
+                        <option
+                          *ngFor="let dietitian of dietitianList"
+                          [value]="dietitian?.id"
+                        >
+                          {{ dietitian?.name }}
+                        </option>
+                      </select>
+                    </div>
+                    <!-- <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Patient Name"
+                        formControlName="name"
+                        [class.is-invalid]="
+                          patientControls.name.touched &&
+                          patientControls.name.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div> -->
+                  </div>
                   <div class="form-group">
                     <label for="name" style="font-size: 1rem">Name</label>
                     <div class="input-group mb-3">
