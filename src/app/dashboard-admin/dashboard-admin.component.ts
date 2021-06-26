@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class DashboardAdminComponent implements OnInit {
   user: any;
+  viewSidebar = false;
   constructor(private router: Router) {
     const userString = localStorage.getItem('User');
     this.user = JSON.parse(userString);
@@ -23,5 +24,13 @@ export class DashboardAdminComponent implements OnInit {
     localStorage.removeItem('RefreshToken');
     localStorage.removeItem('User');
     this.router.navigate(['/']);
+  }
+
+  showSideBar() {
+    this.viewSidebar = !this.viewSidebar;
+  }
+
+  sidebarOff() {
+    this.viewSidebar = false;
   }
 }
