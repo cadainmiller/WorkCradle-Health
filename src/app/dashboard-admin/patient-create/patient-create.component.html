@@ -223,21 +223,22 @@
                             />Heart Disease
                           </div>
                         </fieldset>
-                        <div class="row">
+                        <div class="input-group">
                           <input
                             type="text"
-                            name="others"
-                            placeholder="Others"
-                            style="width: 200px"
-                            class="ml-3 mr-3 form-control"
+                            class="form-control"
+                            placeholder="Other"
                             formControlName="singleHealthCondition"
-                          /><button
-                            type="button"
-                            class="btn btn-primary"
-                            (click)="addHealthCondition()"
-                          >
-                            <span>+</span>Add
-                          </button>
+                          />
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-primary"
+                              type="button"
+                              (click)="addHealthCondition()"
+                            >
+                              +
+                            </button>
+                          </div>
                         </div>
                         <div
                           class="p-1"
@@ -272,23 +273,20 @@
                   <div class="form-group">
                     <label for="foodPreference">Food Preference</label>
                     <div class="form-group">
-                      <div class="row">
-                        <div class="col-sm-12 col-md-10">
-                          <input
-                            class="mr-3 form-control"
-                            type="text"
-                            class="form-control"
-                            placeholder="Food Preference"
-                            formControlName="singleFoodPreference"
-                          />
-                        </div>
-                        <div class="col-sm-12 col-md-2">
+                      <div class="input-group mb-1">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Food Preference"
+                          formControlName="singleFoodPreference"
+                        />
+                        <div class="input-group-append">
                           <button
-                            type="button"
                             class="btn btn-primary"
+                            type="button"
                             (click)="addFoodPreference()"
                           >
-                            <span>+</span>Add
+                            +
                           </button>
                         </div>
                       </div>
