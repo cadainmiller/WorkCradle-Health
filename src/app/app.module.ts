@@ -11,7 +11,7 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
 import { LoginRegisterModule } from './login-register/login-register.module';
 import { HttpConfigInterceptor } from './interceptor/httpconfig.interceptor';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     LoginRegisterModule,
     DashboardAdminModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

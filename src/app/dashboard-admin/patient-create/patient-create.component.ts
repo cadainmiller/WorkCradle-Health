@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CompanyService } from 'src/app/services/company.service';
 import { DietitianService } from 'src/app/services/dietitian.service';
 import { PatientService } from 'src/app/services/patient.service';
 
@@ -11,18 +12,31 @@ import { PatientService } from 'src/app/services/patient.service';
 export class PatientCreateComponent implements OnInit {
   patientForm: FormGroup;
   user: any;
+  superAdminAccess = false;
+  companyNotSelected: boolean;
 
   dietitianList = [];
-
+  companiesList = [];
   patientCreated: boolean;
   constructor(
     private fb: FormBuilder,
     private patientService: PatientService,
-    private dietitianService: DietitianService
+    private dietitianService: DietitianService,
+    private companyService: CompanyService
   ) {
     this.patientCreated = false;
+    this.companyNotSelected = true;
     const userString = localStorage.getItem('User');
     this.user = JSON.parse(userString);
+
+    if (this.user.isSuperAdmin) {
+      this.superAdminAccess = this.user.isSuperAdmin;
+      this.companyService.getAllCompany().subscribe((data) => {
+        console.log('Companies', data);
+        this.companiesList = data;
+      });
+    }
+
     dietitianService
       .getDietitianByCompanyCodeOnly(this.user.companyCode)
       .subscribe((data) => {
@@ -106,6 +120,8 @@ export class PatientCreateComponent implements OnInit {
   cratePatient() {
     if (this.patientForm.valid) {
       const patient = this.patientForm.value;
+      patient.subscriptionStartDate = Date.parse(patient.subscriptionStartDate);
+      patient.subscriptionEndDate = Date.parse(patient.subscriptionEndDate);
       this.patientService.createPatient(patient).subscribe((data) => {
         console.log('Created Patient', data);
         this.patientForm.reset();
@@ -117,4 +133,15 @@ export class PatientCreateComponent implements OnInit {
     }
   }
   cancelCratePatient() {}
+
+  changeCompany(code) {
+    this.patientControls.companyCode.reset();
+    this.companyNotSelected = false;
+    this.dietitianService
+      .getDietitianByCompanyCodeOnly(code)
+      .subscribe((data) => {
+        console.log('Dietitians', data);
+        this.dietitianList = data;
+      });
+  }
 }

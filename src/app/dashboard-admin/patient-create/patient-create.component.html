@@ -25,6 +25,35 @@
             <li class="list-group-item p-3">
               <div class="row">
                 <div class="col-sm-12 col-md-6">
+                  <div class="form-group" *ngIf="superAdminAccess">
+                    <label for="name" style="font-size: 1rem">Company</label>
+
+                    <div class="input-group mb-3">
+                      <select
+                        class="form-control"
+                        id="exampleFormControlSelect1"
+                      >
+                        <option selected value="" disabled>
+                          Select Company
+                        </option>
+                        <option
+                          *ngFor="let company of companiesList"
+                          [value]="company?.id"
+                          (click)="changeCompany(company?.companyCode)"
+                        >
+                          {{ company?.name }}
+                        </option>
+                      </select>
+                      <p
+                        style="width: 100%; margin-top: 0.25rem"
+                        class="mb-0"
+                        *ngIf="companyNotSelected"
+                      >
+                        If not selected patient will Be created your default
+                        company
+                      </p>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label for="name" style="font-size: 1rem"
                       >Assigned Dietitian</label
@@ -225,73 +254,99 @@
                     </div>
                     <div class="col-sm-12 col-md-6">
                       <div class="form-group">
-                        <label>Health Condition</label>
-                        <fieldset style="font-size: 0.85rem">
-                          <div class="d-block">
-                            <input
-                              type="checkbox"
-                              class="m-2"
-                              value="Obese"
-                              (click)="toggleHealthCondition('Obese')"
-                            />Obese
-                          </div>
-                          <div class="d-block">
-                            <input
-                              type="checkbox"
-                              class="m-2"
-                              value="Diabetic"
-                              (click)="toggleHealthCondition('Diabetic')"
-                            />Diabetic
-                          </div>
-                          <div class="d-block">
-                            <input
-                              type="checkbox"
-                              class="m-2"
-                              value="Hypertensive"
-                              (click)="toggleHealthCondition('Hypertensive')"
-                            />Hypertensive
-                          </div>
-                          <div class="d-block">
-                            <input
-                              type="checkbox"
-                              class="m-2"
-                              value="Heart Disease"
-                              (click)="toggleHealthCondition('Heart Disease')"
-                            />Heart Disease
-                          </div>
-                        </fieldset>
-                        <div class="input-group">
+                        <label for="name" style="font-size: 1rem"
+                          >Subscription Start</label
+                        >
+                        <div class="input-group mb-3">
                           <input
                             type="text"
+                            placeholder="MM/DD/YYYY"
+                            formControlName="subscriptionStartDate"
                             class="form-control"
-                            placeholder="Other"
-                            formControlName="singleHealthCondition"
+                            bsDatepicker
                           />
-                          <div class="input-group-append">
-                            <button
-                              class="btn btn-primary"
-                              type="button"
-                              (click)="addHealthCondition()"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-                        <div
-                          class="p-1"
-                          *ngIf="
-                            patientControls.healthCondition.value.length > 0
-                          "
-                        >
-                          <span
-                            style="font-size: 0.85rem"
-                            *ngFor="
-                              let item of patientControls.healthCondition.value
-                            "
-                            >{{ item }},
-                          </span>
                         </div>
                       </div>
+                      <div class="form-group">
+                        <label for="name" style="font-size: 1rem"
+                          >Subscription End</label
+                        >
+                        <div class="input-group mb-3">
+                          <input
+                            type="text"
+                            placeholder="MM/DD/YYYY"
+                            formControlName="subscriptionEndDate"
+                            class="form-control"
+                            bsDatepicker
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Health Condition</label>
+                    <fieldset style="font-size: 0.85rem">
+                      <div class="d-block">
+                        <input
+                          type="checkbox"
+                          class="m-2"
+                          value="Obese"
+                          (click)="toggleHealthCondition('Obese')"
+                        />Obese
+                      </div>
+                      <div class="d-block">
+                        <input
+                          type="checkbox"
+                          class="m-2"
+                          value="Diabetic"
+                          (click)="toggleHealthCondition('Diabetic')"
+                        />Diabetic
+                      </div>
+                      <div class="d-block">
+                        <input
+                          type="checkbox"
+                          class="m-2"
+                          value="Hypertensive"
+                          (click)="toggleHealthCondition('Hypertensive')"
+                        />Hypertensive
+                      </div>
+                      <div class="d-block">
+                        <input
+                          type="checkbox"
+                          class="m-2"
+                          value="Heart Disease"
+                          (click)="toggleHealthCondition('Heart Disease')"
+                        />Heart Disease
+                      </div>
+                    </fieldset>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Other"
+                        formControlName="singleHealthCondition"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                          (click)="addHealthCondition()"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="p-1"
+                      *ngIf="patientControls.healthCondition.value.length > 0"
+                    >
+                      <span
+                        style="font-size: 0.85rem"
+                        *ngFor="
+                          let item of patientControls.healthCondition.value
+                        "
+                        >{{ item }},
+                      </span>
                     </div>
                   </div>
                   <div class="form-group">

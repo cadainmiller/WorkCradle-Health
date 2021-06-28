@@ -16,11 +16,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ChartsModule } from 'ng2-charts';
 import { DataTablesModule } from 'angular-datatables';
+
 import { PatientViewComponent } from './patient-view/patient-view.component';
 
 import { DietitiansViewComponent } from './dietitians-view/dietitians-view.component';
 import { CompanyComponent } from './company/company.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     SharedModule,
     DataTablesModule,
     ChartsModule,
+    // BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
   ],
 })
 export class DashboardAdminModule {}

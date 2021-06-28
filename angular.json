@@ -26,6 +26,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.scss",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
               "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.css"
             ],
