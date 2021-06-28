@@ -14,6 +14,7 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { MainComponent } from './main/main.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { ChartsModule } from 'ng2-charts';
 import { DataTablesModule } from 'angular-datatables';
 import { PatientViewComponent } from './patient-view/patient-view.component';
 
@@ -36,8 +37,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     PatientViewComponent,
 
     DietitiansViewComponent,
-     CompanyComponent,
-     NotFoundComponent,
+    CompanyComponent,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +47,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FormsModule,
     SharedModule,
     DataTablesModule,
+    ChartsModule,
   ],
 })
 export class DashboardAdminModule {}

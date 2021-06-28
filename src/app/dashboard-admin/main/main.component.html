@@ -1,1 +1,184 @@
-<p>main works!</p>
+<div class="main-content-container container-fluid px-4">
+  <div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+      <span class="text-uppercase page-subtitle">Dashboard</span>
+      <h3 class="page-title">Overview</h3>
+    </div>
+  </div>
+  <div *ngIf="!showPage"><app-loading-spinner></app-loading-spinner></div>
+
+  <div *ngIf="showPage">
+    <div class="row">
+      <div class="col-lg col-md-6 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+          <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+              <div class="stats-small__data text-center">
+                <span class="stats-small__label text-uppercase"
+                  >Dietitians</span
+                >
+                <h6 class="stats-small__value count my-3">
+                  {{ statsList.Dietitian.length }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-md-6 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+          <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+              <div class="stats-small__data text-center">
+                <span class="stats-small__label text-uppercase">Patients</span>
+                <h6 class="stats-small__value count my-3">
+                  {{ statsList.Patient.length }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-md-4 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+          <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+              <div class="stats-small__data text-center">
+                <span class="stats-small__label text-uppercase">Document</span>
+                <h6 class="stats-small__value count my-3">
+                  {{ statsList.Document.length }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg col-md-4 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+          <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+              <div class="stats-small__data text-center">
+                <span class="stats-small__label text-uppercase">Admin</span>
+                <h6 class="stats-small__value count my-3">
+                  {{ statsList.Admin.length }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="superAdminAccess" class="col-lg col-md-4 col-sm-12 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+          <div class="card-body p-0 d-flex">
+            <div class="d-flex flex-column m-auto">
+              <div class="stats-small__data text-center">
+                <span class="stats-small__label text-uppercase"
+                  >Super Admin</span
+                >
+                <h6 class="stats-small__value count my-3">
+                  {{ statsList.SuperAdmin.length }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8 col-md-12 col-sm-12 mb-4">
+        <div class="card card-small">
+          <div class="card-header border-bottom">
+            <h6 class="m-0">Patients</h6>
+          </div>
+          <div class="card-body pt-0">
+            <div class="row border-bottom py-2 bg-light">
+              <div class="col-12 col-sm-6"></div>
+              <div class="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
+                <button
+                  type="button"
+                  class="
+                    btn btn-sm btn-white
+                    ml-auto
+                    mr-auto
+                    ml-sm-auto
+                    mr-sm-0
+                    mt-3 mt-sm-0
+                  "
+                >
+                  View Patients →
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body overflow-auto">
+              <table datatable class="table" [dtOptions]="dtOptions">
+                <thead class="bg-light">
+                  <tr>
+                    <th scope="col" class="border-0">Name</th>
+                    <th scope="col" class="border-0">Email</th>
+                    <th scope="col" class="border-0">Phone</th>
+                    <th scope="col" class="border-0">Package</th>
+                    <th scope="col" class="border-0">Date Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let patient of statsList.Patient">
+                    <td>
+                      <a
+                        [routerLink]="['/patient/view/' + patient?.id]"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        routerLinkActive="active"
+                        >{{ patient?.name }}</a
+                      >
+                    </td>
+                    <td>
+                      {{ patient?.email ? patient?.email : "&mdash;" }}
+                    </td>
+                    <td>
+                      {{ patient?.phone ? patient?.phone : "&mdash;" }}
+                    </td>
+
+                    <td>
+                      {{
+                        patient?.subscriptionPackage
+                          ? patient?.subscriptionPackage
+                          : "&mdash;"
+                      }}
+                    </td>
+                    <td>
+                      {{ patient?.createdAt | date: "mediumDate" }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card card-small h-100">
+          <div class="card-header border-bottom">
+            <h6 class="m-0">Stats</h6>
+          </div>
+          <div class="card-body">
+            <div class="">
+              <canvas
+                class="mt-6"
+                baseChart
+                [data]="pieChartData"
+                [labels]="pieChartLabels"
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [legend]="pieChartLegend"
+              >
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
