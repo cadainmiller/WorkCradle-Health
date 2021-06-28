@@ -17,7 +17,7 @@ import { PatientComponent } from './patient/patient.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'admin',
     component: DashboardAdminComponent,
     children: [
       { path: '', component: MainComponent },
@@ -49,6 +49,11 @@ const routes: Routes = [
       { path: 'company', component: CompanyComponent },
       { path: '**', component: NotFoundComponent },
     ],
+  },
+  {
+    path: '',
+    redirectTo: 'admin',
+    pathMatch: 'full',
   },
 ];
 

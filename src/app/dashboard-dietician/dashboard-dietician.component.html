@@ -1,1 +1,237 @@
-<p>dashboard-dietician works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Main Sidebar -->
+    <aside
+      class="main-sidebar col-12 col-md-3 col-lg-2 px-0"
+      [class.open]="viewSidebar"
+    >
+      <div class="main-navbar">
+        <nav
+          class="
+            navbar
+            align-items-stretch
+            navbar-light
+            bg-white
+            flex-md-nowrap
+            border-bottom
+            p-0
+          "
+        >
+          <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px">
+            <div class="d-table m-auto">
+              <img
+                id="main-logo"
+                class="d-inline-block align-top mr-4"
+                style="max-width: 150px"
+                src="data:image/png;base64,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"
+                alt="workcradle"
+              />
+            </div>
+          </a>
+          <a
+            class="toggle-sidebar d-sm-inline d-md-none d-lg-none"
+            (click)="sidebarOff()"
+          >
+            <i class="material-icons">&#xE5C4;</i>
+          </a>
+        </nav>
+      </div>
+      <form
+        action="#"
+        class="
+          main-sidebar__search
+          w-100
+          border-right
+          d-sm-flex d-md-none d-lg-none
+        "
+      >
+        <div class="input-group input-group-seamless ml-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+          <input
+            class="navbar-search form-control"
+            type="text"
+            placeholder="Search for something..."
+            aria-label="Search"
+          />
+        </div>
+      </form>
+      <div class="nav-wrapper">
+        <ul class="nav--no-borders flex-column nav" (click)="sidebarOff()">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons">dashboard</i>
+              </div>
+              <span>Dashboard</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/dietitian/patient/create/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons">person_add_alt</i>
+              </div>
+              <span>Create Patient</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/dietitian/patient/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons">groups</i>
+              </div>
+              <span>Patients</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/dietitian/diet/upload/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons">post_add</i>
+              </div>
+              <span>Upload Diet Plan</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/dietitian/intakeform/create/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons">assignment</i>
+              </div>
+              <span>Create Intake Form</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/dietitian/appointment/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons">schedule</i>
+              </div>
+              <span>Appointments</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/dietitian/document/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons">folder</i>
+              </div>
+              <span>Documents</span></a
+            >
+          </li>
+        </ul>
+      </div>
+    </aside>
+    <!-- End Main Sidebar -->
+    <main
+      class="
+        main-content
+        col-lg-10 col-md-9 col-sm-12
+        p-0
+        offset-lg-2 offset-md-3
+      "
+    >
+      <div class="main-navbar sticky-top bg-white">
+        <!-- Main Navbar -->
+        <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
+          <form
+            action="#"
+            class="main-navbar__search w-100 d-none d-md-flex d-lg-flex"
+          >
+            <div class="input-group input-group-seamless ml-3">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+              <input
+                class="navbar-search form-control"
+                type="text"
+                placeholder="Search for something..."
+                aria-label="Search"
+              />
+            </div>
+          </form>
+          <ul class="navbar-nav border-left flex-row">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle text-nowrap px-3"
+                data-toggle="dropdown"
+                href="#"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <img
+                  class="user-avatar rounded-circle mr-2"
+                  src="assets/images/avatars/0.jpg"
+                  alt="User Avatar"
+                />
+                <span class="d-none d-md-inline-block">{{ user.name }}</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-small">
+                <a class="dropdown-item" href="user-profile-lite.html">
+                  <i class="material-icons">&#xE7FD;</i> Profile</a
+                >
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-danger" (click)="logout()">
+                  <i class="material-icons text-danger">&#xE879;</i> Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+
+          <nav class="nav" (click)="showSideBar()">
+            <a
+              class="
+                nav-link nav-link-icon
+                toggle-sidebar
+                d-md-inline d-lg-none
+                text-center
+                border-left
+              "
+            >
+              <i class="material-icons">&#xE5D2;</i>
+            </a>
+          </nav>
+        </nav>
+      </div>
+      <!-- / .main-navbar -->
+      <div class="main-content-container container-fluid px-4">
+        <router-outlet></router-outlet>
+      </div>
+      <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
+        <span class="copyright ml-auto my-auto mr-2"
+          >Copyright © 2021
+          <!-- <a href="https://designrevision.com" rel="nofollow">DesignRevision</a> -->
+        </span>
+      </footer>
+    </main>
+  </div>
+</div>

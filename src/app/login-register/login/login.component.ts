@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       }
     } else {
-      this.router.navigate(['/']);
+      //this.router.navigate(['/']);
     }
   }
 
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
         } else if (this.user.role === 'patient') {
           this.router.navigate(['/patient']);
         } else {
-          // this.router.navigate(['/']);
+          this.router.navigate(['/']);
         }
       }
     );
