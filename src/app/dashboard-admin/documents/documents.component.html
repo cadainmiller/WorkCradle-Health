@@ -42,7 +42,7 @@
                     <td>
                       <a
                         [routerLink]="[
-                          '/dietitians/view/' + document?.Dietitian?.id
+                          '../dietitians/view/' + document?.Dietitian?.id
                         ]"
                         [routerLinkActiveOptions]="{ exact: true }"
                         routerLinkActive="active"
@@ -52,7 +52,7 @@
                     <td>
                       <a
                         [routerLink]="[
-                          '/patient/view/' + document?.Patient?.id
+                          '../patient/view/' + document?.Patient?.id
                         ]"
                         [routerLinkActiveOptions]="{ exact: true }"
                         routerLinkActive="active"
@@ -66,11 +66,11 @@
                       {{ document?.Document?.createdAt | date: "mediumDate" }}
                     </td>
                     <td>
-                      <button
-                        type="button"
+                      <a
+                        [href]="[document?.Document?.docContentUrl]"
+                        target="_blank"
                         class="mb-2 btn btn-outline-success mr-2"
-                      >
-                        View</button
+                        >View</a
                       ><button
                         type="button"
                         class="mb-2 btn btn-outline-danger mr-2"
