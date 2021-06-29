@@ -37,6 +37,15 @@ export class AppointmentService {
       }
     );
   }
+  getAppointmentByCompanyCodeAndID(companyCode, id): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.httpClient.get(
+      `${environment.apiUrl}Appointment/GetAppointmentByCompanyCodeAndID/${companyCode}/${id}`,
+      {
+        headers: headers,
+      }
+    );
+  }
   getAllAppointments(): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     return this.httpClient.get(

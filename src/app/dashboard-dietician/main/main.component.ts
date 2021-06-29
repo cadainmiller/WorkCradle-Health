@@ -37,13 +37,16 @@ export class MainComponent implements OnInit {
     this.user = JSON.parse(userString);
     if (this.user && this.user.role === 'dietitian') {
       this.statsService
-        .getAdminStats(this.user.companyCode)
+        .getDietitianStatsByCompanyCodeAndID(
+          this.user.companyCode,
+          this.user.id
+        )
         .subscribe((data) => {
           console.log('Stats', data);
-          this.pieChartLabels = [['Dietitian'], ['Patient'], 'Document'];
+          this.pieChartLabels = [['Appointment'], ['Patient'], 'Document'];
 
           this.pieChartData = [
-            data.Dietitian.length,
+            data.Appointment.length,
             data.Patient.length,
             data.Document.length,
           ];

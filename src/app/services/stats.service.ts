@@ -27,4 +27,13 @@ export class StatsService {
       }
     );
   }
+  getDietitianStatsByCompanyCodeAndID(companyCode, id): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.httpClient.get(
+      `${environment.apiUrl}Stats/GetDietitianStatsByCompanyCodeAndID/${companyCode}/${id}`,
+      {
+        headers: headers,
+      }
+    );
+  }
 }

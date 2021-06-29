@@ -15,10 +15,10 @@
             <div class="d-flex flex-column m-auto">
               <div class="stats-small__data text-center">
                 <span class="stats-small__label text-uppercase"
-                  >Dietitians</span
+                  >Appointments</span
                 >
                 <h6 class="stats-small__value count my-3">
-                  {{ statsList.Dietitian.length }}
+                  {{ statsList.Appointment.length }}
                 </h6>
               </div>
             </div>
@@ -96,7 +96,7 @@
                   <tr *ngFor="let patient of statsList.Patient">
                     <td>
                       <a
-                        [routerLink]="['/patient/view/' + patient?.id]"
+                        [routerLink]="['dietitian/patient/view/' + patient?.id]"
                         [routerLinkActiveOptions]="{ exact: true }"
                         routerLinkActive="active"
                         >{{ patient?.name }}</a

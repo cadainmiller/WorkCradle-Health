@@ -1,1 +1,356 @@
-<p>patient-create works!</p>
+<div class="main-content-container px-4 pb-4 container-fluid">
+  <div class="page-header py-4 no-gutters row">
+    <div class="text-sm-left text-center text-md-left mb-sm-0 col-12 col-sm-4">
+      <span class="text-uppercase page-subtitle">Dashboard</span>
+      <h3 class="page-title">Create Patient</h3>
+    </div>
+  </div>
+  <div
+    class="alert alert-success alert-dismissible fade show mx-2"
+    role="alert"
+    *ngIf="patientCreated"
+  >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <i class="fa fa-check mx-2"></i>
+    Patient Was Created Successfully
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 mb-12">
+      <form [formGroup]="patientForm">
+        <div class="card card-small mb-4">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item p-3">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="form-group">
+                    <label for="name" style="font-size: 1rem">Name</label>
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Patient Name"
+                        formControlName="name"
+                        [class.is-invalid]="
+                          patientControls.name.touched &&
+                          patientControls.name.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div>
+                  </div>
+                  <label for="name" style="font-size: 1rem">Email</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Email"
+                      formControlName="email"
+                      [class.is-invalid]="
+                        patientControls.email.touched &&
+                        patientControls.email.errors?.required
+                      "
+                    />
+                    <div class="invalid-feedback">This Felid Is Required</div>
+                  </div>
+                  <label for="name" style="font-size: 1rem">Phone</label>
+                  <div class="input-group mb-3">
+                    <input
+                      type="string"
+                      class="form-control"
+                      placeholder="Phone"
+                      formControlName="phone"
+                    />
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="name" style="font-size: 1rem">Age</label>
+
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Age"
+                        formControlName="age"
+                      />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label for="name" style="font-size: 1rem">Weight</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Weight"
+                        formControlName="weight"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="name" style="font-size: 1rem">Password</label>
+                      <div class="input-group mb-3">
+                        <input
+                          type="password"
+                          class="form-control"
+                          placeholder="*********"
+                          formControlName="password"
+                          [class.is-invalid]="
+                            patientControls.password.touched &&
+                            patientControls.password.errors?.required
+                          "
+                        />
+                        <div class="invalid-feedback">
+                          This Felid Is Required
+                        </div>
+                        <div
+                          *ngIf="patientControls.password.errors?.required"
+                          class="invalid-feedback"
+                        >
+                          This Felid Is Required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label for="name" style="font-size: 1rem"
+                        >Confirm Password</label
+                      >
+                      <div class="input-group mb-3">
+                        <input
+                          type="password"
+                          class="form-control"
+                          placeholder="*********"
+                          formControlName="confirmPassword"
+                          [class.is-invalid]="
+                            patientControls.confirmPassword.touched &&
+                            patientControls.password.value !=
+                              patientControls.confirmPassword.value
+                          "
+                        />
+                        <div class="invalid-feedback">
+                          This Felid Is Required
+                        </div>
+                        <div
+                          *ngIf="
+                            patientControls.confirmPassword.errors?.minlength
+                          "
+                          class="invalid-feedback"
+                        >
+                          Minimum of 8 characters. Must contain a letter and a
+                          number.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                      <div class="form-group">
+                        <label>Subscription Package</label>
+                        <fieldset style="font-size: 0.85rem">
+                          <div class="d-block">
+                            <input
+                              type="radio"
+                              class="m-2"
+                              name="subscription"
+                              value="Trial Package"
+                              (click)="togglePackage('Trial Package')"
+                            />Try Out Package
+                          </div>
+                          <div class="d-block">
+                            <input
+                              type="radio"
+                              class="m-2"
+                              name="subscription"
+                              value="Basic Package"
+                              (click)="togglePackage('Basic Package')"
+                            />Basic Package
+                          </div>
+                          <div class="d-block">
+                            <input
+                              type="radio"
+                              class="m-2"
+                              name="subscription"
+                              (click)="togglePackage('Platinum Package')"
+                            />Platinum Package
+                          </div>
+                          <div class="d-block">
+                            <input
+                              type="radio"
+                              class="m-2"
+                              name="subscription"
+                              (click)="togglePackage('Premium Package')"
+                            />Premium Package
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                      <div class="form-group">
+                        <label for="name" style="font-size: 1rem"
+                          >Subscription Start</label
+                        >
+                        <div class="input-group mb-3">
+                          <input
+                            type="text"
+                            placeholder="MM/DD/YYYY"
+                            formControlName="subscriptionStartDate"
+                            class="form-control"
+                            bsDatepicker
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="name" style="font-size: 1rem"
+                          >Subscription End</label
+                        >
+                        <div class="input-group mb-3">
+                          <input
+                            type="text"
+                            placeholder="MM/DD/YYYY"
+                            formControlName="subscriptionEndDate"
+                            class="form-control"
+                            bsDatepicker
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Health Condition</label>
+                    <fieldset style="font-size: 0.85rem">
+                      <div class="d-block">
+                        <input
+                          type="checkbox"
+                          class="m-2"
+                          value="Obese"
+                          (click)="toggleHealthCondition('Obese')"
+                        />Obese
+                      </div>
+                      <div class="d-block">
+                        <input
+                          type="checkbox"
+                          class="m-2"
+                          value="Diabetic"
+                          (click)="toggleHealthCondition('Diabetic')"
+                        />Diabetic
+                      </div>
+                      <div class="d-block">
+                        <input
+                          type="checkbox"
+                          class="m-2"
+                          value="Hypertensive"
+                          (click)="toggleHealthCondition('Hypertensive')"
+                        />Hypertensive
+                      </div>
+                      <div class="d-block">
+                        <input
+                          type="checkbox"
+                          class="m-2"
+                          value="Heart Disease"
+                          (click)="toggleHealthCondition('Heart Disease')"
+                        />Heart Disease
+                      </div>
+                    </fieldset>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Other"
+                        formControlName="singleHealthCondition"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                          (click)="addHealthCondition()"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="p-1"
+                      *ngIf="patientControls.healthCondition.value.length > 0"
+                    >
+                      <span
+                        style="font-size: 0.85rem"
+                        *ngFor="
+                          let item of patientControls.healthCondition.value
+                        "
+                        >{{ item }},
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="name" style="font-size: 1rem"
+                      >Health Goal</label
+                    >
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Health Goal"
+                        formControlName="healthGoal"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="foodPreference">Food Preference</label>
+                    <div class="form-group">
+                      <div class="input-group mb-1">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Food Preference"
+                          formControlName="singleFoodPreference"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            class="btn btn-primary"
+                            type="button"
+                            (click)="addFoodPreference()"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        class=""
+                        *ngIf="patientControls.foodPreference.value.length > 0"
+                      >
+                        <span
+                          style="font-size: 0.85rem"
+                          *ngFor="
+                            let item of patientControls.foodPreference.value
+                          "
+                          >{{ item }},
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary mr-2"
+                (click)="cratePatient()"
+              >
+                Create Patient
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="cancelCratePatient()"
+              >
+                Cancel
+              </button>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,383 @@
-<p>patient-view works!</p>
+<div class="main-content-container px-4 pb-4 container-fluid">
+  <div class="page-header py-4 no-gutters row">
+    <div class="text-sm-left text-center text-md-left mb-sm-0 col-12 col-sm-4">
+      <span class="text-uppercase page-subtitle">Dashboard</span>
+      <h3 class="page-title">
+        Patient - {{ patient?.patient?.name | titlecase }}
+      </h3>
+    </div>
+  </div>
+  <div *ngIf="!showPage"><app-loading-spinner></app-loading-spinner></div>
+
+  <div *ngIf="showPage" class="row">
+    <div class="col-lg-4">
+      <div class="card card-small mb-4 pt-3">
+        <div class="card-header border-bottom text-center">
+          <div class="mb-3 mx-auto"></div>
+          <h4 class="mb-0">{{ patient?.patient?.name | titlecase }}</h4>
+          <span class="text-muted d-block mb-2">{{
+            patient?.patient?.role | titlecase
+          }}</span>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item p-4">
+            <div class="row">
+              <div class="col">
+                <form [formGroup]="updateProfileForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="feFirstName">Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="feFirstName"
+                        placeholder="First Name"
+                        formControlName="name"
+                        [class.is-invalid]="
+                          updateProfileControls.name.touched &&
+                          updateProfileControls.name.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="feEmailAddress">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="feEmailAddress"
+                        placeholder="Email"
+                        formControlName="email"
+                        [class.is-invalid]="
+                          updateProfileControls.email.touched &&
+                          updateProfileControls.email.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="feEmailAddress">Phone</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Phone"
+                        formControlName="phone"
+                        [class.is-invalid]="
+                          updateProfileControls.phone.touched &&
+                          updateProfileControls.phone.errors?.required
+                        "
+                      />
+                      <div class="invalid-feedback">This Felid Is Required</div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="name" style="font-size: 1rem">Age</label
+                      ><input
+                        type="number"
+                        placeholder="Age"
+                        formControlName="age"
+                        class="form-control ng-untouched ng-pristine ng-valid"
+                        ng-reflect-name="age"
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="name" style="font-size: 1rem">Weight</label
+                      ><input
+                        type="number"
+                        placeholder="Weight"
+                        formControlName="weight"
+                        class="form-control ng-untouched ng-pristine ng-valid"
+                        ng-reflect-name="weight"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                      <div class="form-group">
+                        <label>Subscription Package</label>
+                        <fieldset style="font-size: 0.85rem">
+                          <div class="d-block">
+                            <input
+                              type="radio"
+                              class="m-2"
+                              name="subscription"
+                              value="Trial Package"
+                              (click)="togglePackage('Trial Package')"
+                              [checked]="
+                                updateProfileControls.subscriptionPackage
+                                  .value === 'Trial Package'
+                              "
+                            />Try Out Package
+                          </div>
+                          <div class="d-block">
+                            <input
+                              type="radio"
+                              class="m-2"
+                              name="subscription"
+                              value="Basic Package"
+                              (click)="togglePackage('Basic Package')"
+                              [checked]="
+                                updateProfileControls.subscriptionPackage
+                                  .value === 'Basic Package'
+                              "
+                            />Basic Package
+                          </div>
+                          <div class="d-block">
+                            <input
+                              type="radio"
+                              class="m-2"
+                              name="subscription"
+                              (click)="togglePackage('Platinum Package')"
+                              [checked]="
+                                updateProfileControls.subscriptionPackage
+                                  .value === 'Platinum Package'
+                              "
+                            />Platinum Package
+                          </div>
+                          <div class="d-block">
+                            <input
+                              type="radio"
+                              class="m-2"
+                              name="subscription"
+                              (click)="togglePackage('Premium Package')"
+                              [checked]="
+                                updateProfileControls.subscriptionPackage
+                                  .value === 'Premium Package'
+                              "
+                            />Premium Package
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                      <div class="form-group">
+                        <label>Health Condition</label>
+                        <fieldset style="font-size: 0.85rem">
+                          <div
+                            class="d-block"
+                            *ngFor="
+                              let item of updateProfileControls.healthCondition
+                                .value
+                            "
+                          >
+                            <input
+                              type="checkbox"
+                              value="Obese"
+                              class="m-2"
+                              checked
+                            />{{ item }}
+                          </div>
+                        </fieldset>
+
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Other"
+                            formControlName="singleHealthCondition"
+                          />
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-primary"
+                              type="button"
+                              (click)="addHealthCondition()"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                      <label for="name" style="font-size: 1rem"
+                        >Health Goal</label
+                      >
+                      <div class="input-group mb-3">
+                        <input
+                          type="text"
+                          placeholder="Health Goal"
+                          formControlName="healthGoal"
+                          class="form-control ng-untouched ng-pristine ng-valid"
+                          ng-reflect-name="healthGoal"
+                          foodPreference
+                        />
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                      <div class="input-group mb-1">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Food Preference"
+                          formControlName="singleFoodPreference"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            class="btn btn-primary"
+                            type="button"
+                            (click)="addFoodPreference()"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        class="p-1"
+                        *ngIf="
+                          updateProfileControls.foodPreference.value.length > 0
+                        "
+                      >
+                        <span
+                          *ngFor="
+                            let item of updateProfileControls.foodPreference
+                              .value
+                          "
+                          class="
+                            m-1
+                            card-post__category
+                            badge badge-pill badge-info
+                          "
+                          >{{ item }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-accent mt-2"
+                    (click)="updateProfile()"
+                    [disabled]="updateProfileForm.invalid"
+                  >
+                    Update Profile
+                  </button>
+                </form>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+          <h6 class="m-0">Patients</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item p-3">
+            <div class="row">
+              <div class="col">
+                <table datatable class="table" [dtOptions]="dtOptions">
+                  <thead class="bg-light">
+                    <tr>
+                      <th scope="col" class="border-0">Document Name</th>
+                      <th scope="col" class="border-0">Date Uploaded</th>
+                      <th scope="col" class="border-0">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let document of patient.document">
+                      <td>
+                        {{ document?.docName }}
+                      </td>
+                      <td>
+                        {{ document?.createdAt | date: "mediumDate" }}
+                      </td>
+                      <td>
+                        <a
+                          [href]="[document?.docContentUrl]"
+                          target="_blank"
+                          class="mb-2 btn btn-outline-success mr-2"
+                          >View</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+          <div class="row justify-content-between">
+            <div class="col-md-3">
+              <h6 class="m-0">Intake information</h6>
+            </div>
+            <div
+              class="col-md-2"
+              *ngIf="patient?.intakeInformation?.length === 0"
+            >
+              <button
+                type="button"
+                class="mb-2 btn btn-sm btn-outline-primary mr-1"
+              >
+                Add Intake Form
+              </button>
+            </div>
+          </div>
+        </div>
+        <ul
+          class="list-group list-group-flush"
+          *ngIf="patient?.intakeInformation?.length === 0"
+        >
+          <li class="list-group-item p-3">
+            <div class="row">
+              <div class="col">
+                <div class="alert alert-primary" role="alert">
+                  No Information Added
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <ul
+          class="list-group list-group-flush"
+          *ngIf="patient?.intakeInformation?.length > 0"
+        >
+          <li class="list-group-item p-3">
+            <div class="row">
+              <div class="col">
+                <table datatable class="table">
+                  <thead class="bg-light">
+                    <tr>
+                      <th
+                        *ngFor="let form of patient?.intakeForm?.form"
+                        scope="col"
+                        class="border-0"
+                      >
+                        {{ form.field }}
+                      </th>
+                      <th scope="col" class="border-0">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let info of intakeInfoList">
+                      <td *ngFor="let item of info">
+                        {{ item }}
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-white">
+                          <span class="text-danger">
+                            <i class="material-icons">clear</i>
+                          </span>
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

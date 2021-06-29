@@ -47,6 +47,15 @@ export class DocumentService {
       }
     );
   }
+  getDocumentByCompanyCodeAndID(companyCode, id): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.httpClient.get(
+      `${environment.apiUrl}Document/GetDocumentByCompanyCodeAndID/${companyCode}/${id}`,
+      {
+        headers: headers,
+      }
+    );
+  }
   getDocumentByCreatedById(id): Observable<any> {
     const headers = { 'content-type': 'application/json' };
     return this.httpClient.get(

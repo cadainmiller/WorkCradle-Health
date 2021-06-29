@@ -56,6 +56,15 @@ export class PatientService {
       }
     );
   }
+  getPatientByCompanyCodeAndID(companyCode, patientId): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.httpClient.get(
+      `${environment.apiUrl}Patient/GetPatientByCompanyCodeAndID/${companyCode}/${patientId}`,
+      {
+        headers: headers,
+      }
+    );
+  }
 
   updatePatient(patientId, body): Observable<any> {
     const headers = { 'content-type': 'application/json' };
