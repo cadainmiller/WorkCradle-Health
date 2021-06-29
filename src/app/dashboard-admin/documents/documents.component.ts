@@ -14,10 +14,33 @@ export class DocumentsComponent implements OnInit {
   user: any;
   loading = false;
   showPage = false;
+  superAdminAccess = false;
 
   constructor(private documentService: DocumentService) {
     const userString = localStorage.getItem('User');
     this.user = JSON.parse(userString);
+
+    if (this.user) {
+      if (this.user.isSuperAdmin) {
+        this.superAdminAccess = this.user.isSuperAdmin;
+        this.documentService.getDocumentAdmin().subscribe((data) => {
+          console.log('Documents', data);
+          this.dtTrigger.next();
+
+          this.documentList = data;
+          this.showPage = true;
+        });
+      } else if (!this.user.isSuperAdmin) {
+        this.documentService
+          .getDocumentByCompanyCode(this.user.companyCode)
+          .subscribe((data) => {
+            console.log('Documents', data);
+            this.dtTrigger.next();
+            this.documentList = data;
+            this.showPage = true;
+          });
+      }
+    }
   }
 
   ngOnInit(): void {
@@ -25,15 +48,5 @@ export class DocumentsComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 15,
     };
-
-    this.documentService
-      .getDocumentByCompanyCode(this.user.companyCode)
-      .subscribe((data) => {
-        console.log('Documents', data);
-        this.dtTrigger.next();
-        this.loading = false;
-        this.documentList = data;
-        this.showPage = true;
-      });
   }
 }

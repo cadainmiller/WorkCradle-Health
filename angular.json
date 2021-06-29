@@ -80,6 +80,9 @@
           "configurations": {
             "production": {
               "browserTarget": "workcradle-health:build:production"
+            },
+            "demo": {
+              "browserTarget": "workcradle-health:build:demo"
             }
           }
         },

@@ -37,6 +37,15 @@ export class DocumentService {
       }
     );
   }
+  getDocumentAdmin(): Observable<any> {
+    const headers = { 'content-type': 'application/json' };
+    return this.httpClient.get(
+      `${environment.apiUrl}Document/GetDocumentAdmin/`,
+      {
+        headers: headers,
+      }
+    );
+  }
 
   getDocumentById(id): Observable<any> {
     const headers = { 'content-type': 'application/json' };
