@@ -3,9 +3,41 @@
     <div class="text-sm-left text-center text-md-left mb-sm-0 col-12 col-sm-4">
       <span class="text-uppercase page-subtitle">Dashboard</span>
       <h3 class="page-title">Admins</h3>
+      <button
+        type="button"
+        class="mb-2 btn btn-outline-primary btn-sm btn-pill mt-2"
+        data-toggle="modal"
+        data-target="#createAdminModal"
+      >
+        <i class="material-icons mr-1">person_add</i> Create Admin
+      </button>
     </div>
   </div>
   <div *ngIf="!showPage"><app-loading-spinner></app-loading-spinner></div>
+
+  <div
+    class="alert alert-success alert-dismissible fade show mx-2"
+    role="alert"
+    *ngIf="adminCreated"
+  >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <i class="fa fa-check mx-2"></i>
+    Admin Was Created Successfully
+  </div>
+
+  <div
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+    *ngIf="hasError"
+  >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <i class="fa fa-times mx-2"></i>
+    {{ hasErrorMessage }}
+  </div>
 
   <div *ngIf="showPage">
     <div
@@ -61,6 +93,169 @@
             View
           </button> -->
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="createAdminModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="createAdminModalTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          Create Admin User
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body card">
+        <form [formGroup]="createAdminForm">
+          <div class="form-group" *ngIf="superAdminAccess">
+            <label for="name" style="font-size: 1rem">Company</label>
+
+            <div class="input-group mb-3">
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option selected value="" disabled>Select Company</option>
+                <option
+                  *ngFor="let company of companiesList"
+                  [value]="company?.id"
+                  (click)="changeCompany(company?.companyCode)"
+                >
+                  {{ company?.name }}
+                </option>
+              </select>
+              <p
+                style="width: 100%; margin-top: 0.25rem"
+                class="mb-0"
+                *ngIf="companyNotSelected"
+              >
+                If not selected patient will Be created your default company
+              </p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="name" style="font-size: 1rem">Name</label>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Name"
+                formControlName="name"
+                [class.is-invalid]="
+                  createAdminControls.name.touched &&
+                  createAdminControls.name.errors?.required
+                "
+              />
+              <div class="invalid-feedback">This Felid Is Required</div>
+            </div>
+          </div>
+          <label for="name" style="font-size: 1rem">Email</label>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email"
+              formControlName="email"
+              [class.is-invalid]="
+                createAdminControls.email.touched &&
+                createAdminControls.email.errors?.required
+              "
+            />
+            <div class="invalid-feedback">This Felid Is Required</div>
+          </div>
+          <label for="name" style="font-size: 1rem">Phone</label>
+          <div class="input-group mb-3">
+            <input
+              type="string"
+              class="form-control"
+              placeholder="Phone"
+              formControlName="phone"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="name" style="font-size: 1rem">Password</label>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="*********"
+                formControlName="password"
+                [class.is-invalid]="
+                  createAdminControls.password.touched &&
+                  createAdminControls.password.errors?.required
+                "
+              />
+              <div class="invalid-feedback">This Felid Is Required</div>
+              <div
+                *ngIf="createAdminControls.password.errors?.required"
+                class="invalid-feedback"
+              >
+                This Felid Is Required
+              </div>
+            </div>
+          </div>
+
+          <label for="name" style="font-size: 1rem">Confirm Password</label>
+
+          <div class="input-group mb-3">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="*********"
+              formControlName="confirmPassword"
+              [class.is-invalid]="
+                createAdminControls.confirmPassword.touched &&
+                createAdminControls.password.value !=
+                  createAdminControls.confirmPassword.value
+              "
+            />
+            <div class="input-group-append">
+              <button
+                class="btn"
+                type="button"
+                [class.btn-danger]="
+                  createAdminControls.confirmPassword.touched &&
+                  createAdminControls.password.value !=
+                    createAdminControls.confirmPassword.value
+                "
+                (click)="copyPassword()"
+              >
+                COPY
+              </button>
+            </div>
+            <div class="invalid-feedback">This Felid Is Required</div>
+            <div
+              *ngIf="createAdminControls.confirmPassword.errors?.minlength"
+              class="invalid-feedback"
+            >
+              Minimum of 8 characters. Must contain a letter and a number.
+            </div>
+          </div>
+
+          <button
+            form="Upload_Diet_Plan"
+            class="mt-1 btn btn-primary"
+            data-dismiss="modal"
+            (click)="createAdmin()"
+          >
+            Create Admin
+          </button>
+        </form>
       </div>
     </div>
   </div>
