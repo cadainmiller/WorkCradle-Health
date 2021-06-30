@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppointmentService } from 'src/app/services/appointment.service';
+import { CompanyService } from 'src/app/services/company.service';
 import { DietitianService } from 'src/app/services/dietitian.service';
 import { PatientService } from 'src/app/services/patient.service';
 
@@ -13,11 +14,15 @@ export class AppointmentsComponent implements OnInit {
   appointmentList = [];
   patientList = [];
   dietitianList = [];
+  companiesList = [];
 
   appointmentCreated = false;
   message = '';
 
+  user: any;
+  loading = false;
   showPage = false;
+  superAdminAccess = false;
 
   crateAppointmentForm: FormGroup;
 
@@ -25,31 +30,64 @@ export class AppointmentsComponent implements OnInit {
     private appointmentService: AppointmentService,
     private patientService: PatientService,
     private dietitianService: DietitianService,
+    private companyService: CompanyService,
     private fb: FormBuilder
   ) {
     const userString = localStorage.getItem('User');
-    const user = JSON.parse(userString);
+    this.user = JSON.parse(userString);
 
-    appointmentService
-      .getAppointmentByCompanyCode(user.companyCode)
-      .subscribe((data) => {
-        console.log('Appointments', data);
-        this.appointmentList = data;
-        this.showPage = true;
-      });
-    patientService
-      .getPatientByCompanyCodeOnly(user.companyCode)
-      .subscribe((data) => {
-        console.log('Patients', data);
-        this.patientList = data;
-      });
-    dietitianService
-      .getDietitianByCompanyCodeOnly(user.companyCode)
-      .subscribe((data) => {
-        console.log('Dietitians', data);
-        this.dietitianList = data;
-      });
-    this.buildForm(user);
+    if (this.user) {
+      this.buildForm(this.user);
+      this.buildForm(this.user);
+      if (this.user.isSuperAdmin) {
+        this.superAdminAccess = this.user.isSuperAdmin;
+        this.companyService.getAllCompany().subscribe((data) => {
+          console.log('Companies', data);
+          this.companiesList = data;
+        });
+        appointmentService.getAllAppointments().subscribe((data) => {
+          console.log('Appointments', data);
+          this.appointmentList = data;
+          this.showPage = true;
+        });
+        patientService
+          .getPatientByCompanyCodeOnly(this.user.companyCode)
+          .subscribe((data) => {
+            console.log('Patients', data);
+            this.patientList = data;
+          });
+        dietitianService
+          .getDietitianByCompanyCodeOnly(this.user.companyCode)
+          .subscribe((data) => {
+            console.log('Dietitians', data);
+            this.dietitianList = data;
+          });
+      } else if (!this.user.isSuperAdmin) {
+        appointmentService
+          .getAppointmentByCompanyCode(this.user.companyCode)
+          .subscribe((data) => {
+            console.log('Appointments', data);
+            this.appointmentList = data;
+            this.showPage = true;
+          });
+        patientService
+          .getPatientByCompanyCodeOnly(this.user.companyCode)
+          .subscribe((data) => {
+            console.log('Patients', data);
+            this.patientList = data;
+          });
+        dietitianService
+          .getDietitianByCompanyCodeOnly(this.user.companyCode)
+          .subscribe((data) => {
+            console.log('Dietitians', data);
+            this.dietitianList = data;
+          });
+      }
+    }
+  }
+
+  get appointmentControls() {
+    return this.crateAppointmentForm.controls;
   }
 
   private buildForm(user): void {
@@ -108,5 +146,26 @@ export class AppointmentsComponent implements OnInit {
   }
   rejectAppointment(id) {
     console.log(id);
+  }
+
+  changeCompany(code) {
+    this.appointmentControls.companyCode.reset();
+    this.crateAppointmentForm.patchValue({
+      companyCode: code,
+    });
+    this.dietitianService
+      .getDietitianByCompanyCodeOnly(code)
+      .subscribe((data) => {
+        console.log('Dietitians', data);
+        this.dietitianList = data;
+      });
+  }
+  changeDietitian(code, id) {
+    this.patientService
+      .getPatientByCompanyCodeAndID(code, id)
+      .subscribe((data) => {
+        console.log('Patient', data);
+        this.patientList = data;
+      });
   }
 }

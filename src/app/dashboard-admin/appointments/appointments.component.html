@@ -81,36 +81,91 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item px-3">
                     <form [formGroup]="crateAppointmentForm">
-                      <strong class="text-muted d-block mb-2">Patient</strong>
-                      <div class="input-group mb-3">
-                        <select
-                          class="form-control"
-                          id="exampleFormControlSelect1"
-                          formControlName="createdFor"
+                      <div class="form-group" *ngIf="superAdminAccess">
+                        <label for="name" style="font-size: 1rem"
+                          >Company</label
                         >
-                          <option
-                            *ngFor="let patient of patientList"
-                            [value]="patient?.id"
+
+                        <div class="input-group mb-3">
+                          <select
+                            class="form-control"
+                            id="exampleFormControlSelect1"
                           >
-                            {{ patient?.name }}
-                          </option>
-                        </select>
+                            <option selected value="" disabled>
+                              Select Company
+                            </option>
+                            <option
+                              *ngFor="let company of companiesList"
+                              [value]="company?.id"
+                              (click)="changeCompany(company?.companyCode)"
+                            >
+                              {{ company?.name }}
+                            </option>
+                          </select>
+                          <p
+                            style="width: 100%; margin-top: 0.25rem"
+                            class="mb-0"
+                            *ngIf="companyNotSelected"
+                          >
+                            If not selected patient will Be created your default
+                            company
+                          </p>
+                        </div>
                       </div>
-                      <strong class="text-muted d-block mb-2">Dietitian</strong>
-                      <div class="input-group mb-3">
-                        <select
-                          class="form-control"
-                          id="exampleFormControlSelect1"
-                          formControlName="createdBy"
+                      <div class="form-group">
+                        <label for="name" style="font-size: 1rem"
+                          >Dietitian</label
                         >
-                          <option
-                            *ngFor="let dietitian of dietitianList"
-                            [value]="dietitian?.id"
+
+                        <div class="input-group mb-3">
+                          <select
+                            class="form-control"
+                            id="exampleFormControlSelect1"
+                            formControlName="createdBy"
                           >
-                            {{ dietitian?.name }}
-                          </option>
-                        </select>
+                            <option selected value="" disabled>
+                              Select Dietitian
+                            </option>
+                            <option
+                              *ngFor="let dietitian of dietitianList"
+                              [value]="dietitian?.id"
+                              (click)="
+                                changeDietitian(
+                                  dietitian?.companyCode,
+                                  dietitian?.id
+                                )
+                              "
+                            >
+                              {{ dietitian?.name }}
+                            </option>
+                          </select>
+                        </div>
                       </div>
+
+                      <div class="form-group">
+                        <label for="name" style="font-size: 1rem"
+                          >Patients</label
+                        >
+
+                        <div class="input-group mb-3">
+                          <select
+                            class="form-control"
+                            id="exampleFormControlSelect1"
+                            formControlName="createdFor"
+                          >
+                            <option selected value="" disabled>
+                              Select Patient
+                            </option>
+                            <option
+                              *ngFor="let patient of patientList"
+                              [value]="patient?.id"
+                            >
+                              {{ patient?.name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
                       <div class="row">
                         <div class="col-lg-6 col md-6 col sm-12">
                           <strong class="text-muted d-block mb-2">Date</strong>
