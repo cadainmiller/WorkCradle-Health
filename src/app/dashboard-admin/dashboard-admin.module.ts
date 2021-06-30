@@ -24,6 +24,7 @@ import { CompanyComponent } from './company/company.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { AdminCreateViewComponent } from './admin-create-view/admin-create-view.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     DietitiansViewComponent,
     CompanyComponent,
     NotFoundComponent,
+    AdminCreateViewComponent,
   ],
   imports: [
     CommonModule,

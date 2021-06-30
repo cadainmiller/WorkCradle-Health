@@ -169,6 +169,18 @@
               <span>Documents</span></a
             >
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [routerLink]="['/admin/admins/view/']"
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active"
+              ><div class="d-inline-block item-icon-wrapper">
+                <i class="material-icons"> admin_panel_settings </i>
+              </div>
+              <span>Admins</span></a
+            >
+          </li>
           <li class="nav-item" *ngIf="user.isSuperAdmin">
             <a
               class="nav-link"

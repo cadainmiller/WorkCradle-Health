@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminCreateViewComponent } from './admin-create-view/admin-create-view.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CompanyComponent } from './company/company.component';
 import { DashboardAdminComponent } from './dashboard-admin.component';
@@ -47,6 +48,7 @@ const routes: Routes = [
       },
       { path: 'document', component: DocumentsComponent },
       { path: 'company', component: CompanyComponent },
+      { path: 'admins/view', component: AdminCreateViewComponent },
       { path: '**', component: NotFoundComponent },
     ],
   },

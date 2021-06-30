@@ -25,6 +25,14 @@
           <div class="card card-small">
             <div class="card-header border-bottom">
               <h6 class="m-0">Company Documents</h6>
+              <button
+                type="button"
+                class="mb-2 btn btn-outline-primary btn-sm btn-pill mt-2"
+                data-toggle="modal"
+                data-target="#documentUploadModal"
+              >
+                <i class="material-icons mr-1">file_upload</i> Upload Document
+              </button>
             </div>
             <div class="card-body overflow-auto">
               <table datatable class="table" [dtOptions]="dtOptions">
@@ -84,6 +92,141 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="documentUploadModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="documentUploadModalTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          Upload Client Diet Plan
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body card">
+        <form [formGroup]="documentForm">
+          <div class="form-group" *ngIf="superAdminAccess">
+            <label for="name" style="font-size: 1rem">Company</label>
+
+            <div class="input-group mb-3">
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option selected value="" disabled>Select Company</option>
+                <option
+                  *ngFor="let company of companiesList"
+                  [value]="company?.id"
+                  (click)="changeCompany(company?.companyCode)"
+                >
+                  {{ company?.name }}
+                </option>
+              </select>
+              <p
+                style="width: 100%; margin-top: 0.25rem"
+                class="mb-0"
+                *ngIf="companyNotSelected"
+              >
+                If not selected patient will Be created your default company
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="name" style="font-size: 1rem">Dietitian</label>
+
+            <div class="input-group mb-3">
+              <select
+                class="form-control"
+                id="exampleFormControlSelect1"
+                formControlName="createdFor"
+              >
+                <option selected value="" disabled>Select Dietitian</option>
+                <option
+                  *ngFor="let dietitian of dietitianList"
+                  [value]="dietitian?.id"
+                  (click)="
+                    changeDietitian(dietitian?.companyCode, dietitian?.id)
+                  "
+                >
+                  {{ dietitian?.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="name" style="font-size: 1rem">Patients</label>
+
+            <div class="input-group mb-3">
+              <select
+                class="form-control"
+                id="exampleFormControlSelect1"
+                formControlName="createdBy"
+              >
+                <option selected value="" disabled>Select Patient</option>
+                <option
+                  *ngFor="let patient of patientList"
+                  [value]="patient?.id"
+                >
+                  {{ patient?.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="name" style="font-size: 1rem">Document Name</label>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Document Name"
+                formControlName="docName"
+                [class.is-invalid]="
+                  documentControls.docName.touched &&
+                  documentControls.docName.errors?.required
+                "
+              />
+              <div class="invalid-feedback">This Felid Is Required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Document</label>
+            <div class="custom-file">
+              <input
+                type="file"
+                class="custom-file-input"
+                formControlName="file"
+                (change)="onFileChange($event)"
+              /><label class="custom-file-label" for="customFile2">{{
+                fileName ? fileName : "Document"
+              }}</label>
+            </div>
+          </div>
+
+          <button
+            form="Upload_Diet_Plan"
+            class="mt-1 btn btn-primary"
+            (click)="uploadDocument()"
+          >
+            Upload Document
+          </button>
+        </form>
       </div>
     </div>
   </div>

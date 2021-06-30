@@ -9,14 +9,10 @@ import { environment } from 'src/environments/environment';
 export class DocumentService {
   constructor(private httpClient: HttpClient) {}
 
-  createDocument(body): Observable<any> {
-    const headers = { 'content-type': 'application/json' };
+  createDocument(body: FormData): Observable<any> {
     return this.httpClient.post(
       `${environment.apiUrl}Document/CreateDocument/`,
-      body,
-      {
-        headers: headers,
-      }
+      body
     );
   }
   acceptDocument(): Observable<any> {
